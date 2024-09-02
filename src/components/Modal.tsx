@@ -1,0 +1,44 @@
+import { AiOutlineClose } from "react-icons/ai";
+import ReactDOM from "react-dom";
+
+import { useEscapeKeyClose } from "../hooks";
+import { handleClickOnBackdrop } from "../helpers";
+
+interface ModalProps {
+  isOpen: boolean;
+  className?: string;
+  children: React.ReactNode;
+  toggleModal: () => void;
+}
+
+const modalRoot = document.querySelector("#modalRoot")!;
+
+export const Modal = ({
+  isOpen,
+  className,
+  children,
+  toggleModal,
+}: ModalProps) => {
+  useEscapeKeyClose(isOpen, toggleModal);
+
+  return ReactDOM.createPortal(
+    <div
+      className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-[#191a1599]"
+      onClick={(e) => handleClickOnBackdrop(toggleModal, e)}
+    >
+      <div
+        className={`bg-firstGradColor relative max-h-[95%] max-w-[330px] rounded-[30px] sm-max:max-w-[300px] md:max-w-[700px] lg:max-w-[1180px] ${className}`}
+      >
+        <button
+          type="button"
+          onClick={toggleModal}
+          className="absolute right-4 top-5 md:right-7 md:top-7"
+        >
+          <AiOutlineClose />
+        </button>
+        {children}
+      </div>
+    </div>,
+    modalRoot
+  );
+};
