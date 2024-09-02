@@ -7,6 +7,9 @@ export default {
       md: "768px",
       lg: "1440px",
     },
+    fontFamily: {
+      inter: ["Inter", "sans-serif"],
+    },
     extend: {},
   },
   corePlugins: {
