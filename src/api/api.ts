@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Book, BookResponse, NewBook } from "../types";
 
 const instance = axios.create({
-  baseURL: "https://book-manager-backend-tzn9.onrender.com/api",
+  baseURL: import.meta.env.VITE_BASE_URL,
 });
 export const getBooks = async (query?: string): Promise<BookResponse> => {
   try {
