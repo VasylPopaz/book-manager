@@ -5,36 +5,72 @@ const instance = axios.create({
   baseURL: "https://book-manager-backend-tzn9.onrender.com/api",
 });
 export const getBooks = async (query?: string): Promise<BookResponse> => {
-  const { data } = await instance.get(`/books${query ? `?${query}` : ""}`);
+  try {
+    const { data } = await instance.get(`/books${query ? `?${query}` : ""}`);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message || "An error occurred");
+    }
+    throw new Error("An unknown error occurred");
+  }
 };
 
 export const addBook = async (credentials: NewBook): Promise<Book> => {
-  const { data } = await instance.post("/books", credentials);
+  try {
+    const { data } = await instance.post("/books", credentials);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message || "An error occurred");
+    }
+    throw new Error("An unknown error occurred");
+  }
 };
 
 export const updateBook = async (credentials: NewBook): Promise<Book> => {
-  const { isbn } = credentials;
+  try {
+    const { isbn } = credentials;
 
-  const { data } = await instance.put(`/books/${isbn}`, credentials);
+    const { data } = await instance.put(`/books/${isbn}`, credentials);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message || "An error occurred");
+    }
+    throw new Error("An unknown error occurred");
+  }
 };
 
 export const updateBookStatus = async (
   isbn: string,
   isBorrowed: boolean
 ): Promise<Book> => {
-  const { data } = await instance.patch(`/books/${isbn}`, { isBorrowed });
+  try {
+    const { data } = await instance.patch(`/books/${isbn}`, { isBorrowed });
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data.message || "An error occurred");
+    }
+    throw new Error("An unknown error occurred");
+  }
 };
 
 export const deleteBook = async (isbn: string): Promise<Book> => {
-  const { data } = await instance.delete(`/books/${isbn}`);
+  try {
+    const { data } = await instance.delete(`/books/${isbn}`);
 
-  return data;
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log(error.response?.data.message);
+      throw new Error(error.response?.data.message || "An error occurred");
+    }
+    throw new Error("An unknown error occurred");
+  }
 };
