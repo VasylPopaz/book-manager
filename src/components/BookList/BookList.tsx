@@ -4,9 +4,14 @@ import type { Book } from "../../types";
 interface BookListProps {
   books: Book[];
   handleSortClick: (sortField: keyof Book) => void;
+  onDeleteBook: (id: string) => void;
 }
 
-export const BookList = ({ books, handleSortClick }: BookListProps) => {
+export const BookList = ({
+  books,
+  handleSortClick,
+  onDeleteBook,
+}: BookListProps) => {
   const thStyles =
     "font-bold bg-[#7f26ba] py-[10px] px-[15px] cursor-pointer transition duration-300 first:rounded-tl-lg last:rounded-tr-lg";
   return (
@@ -37,7 +42,7 @@ export const BookList = ({ books, handleSortClick }: BookListProps) => {
         </thead>
         <tbody>
           {books.map((book, index) => (
-            <BookListItem key={book._id} {...{ book, index }} />
+            <BookListItem key={book._id} {...{ book, index, onDeleteBook }} />
           ))}
         </tbody>
       </table>

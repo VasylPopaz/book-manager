@@ -21,6 +21,9 @@ export const App = () => {
 
   if (!books) return;
 
+  const onDeleteBook = (isbn: string) => {
+    setBooks(books.filter((book) => book.isbn !== isbn));
+  };
   const handleSortClick = (sortField: keyof Book) => {
     let direction: "asc" | "desc" = "asc";
 
@@ -54,7 +57,11 @@ export const App = () => {
 
   return (
     <div className="container py-8">
-      <BookList books={books} handleSortClick={handleSortClick} />
+      <BookList
+        books={books}
+        handleSortClick={handleSortClick}
+        onDeleteBook={onDeleteBook}
+      />
     </div>
   );
 };
