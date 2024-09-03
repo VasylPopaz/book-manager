@@ -1,5 +1,5 @@
-import { AiOutlineClose } from "react-icons/ai";
 import ReactDOM from "react-dom";
+import { AiOutlineClose } from "react-icons/ai";
 
 import { useEscapeKeyClose } from "../hooks";
 import { handleClickOnBackdrop } from "../helpers";
