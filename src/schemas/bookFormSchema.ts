@@ -21,4 +21,5 @@ export const bookFormSchema = yup.object().shape({
     .required("ISBN is required")
     .matches(/^[^\s].*[^\s]$/, "ISBN should not start or end with spaces")
     .matches(/^\d{3}-\d{1,5}-\d{1,7}-\d{1,7}-\d{1}$/, "ISBN is not valid"),
+  isBorrowed: yup.boolean().default(false),
 });

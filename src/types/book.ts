@@ -3,7 +3,8 @@ export interface Book {
   title: string;
   author: string;
   isbn: string;
-  isBorrowed?: boolean;
+  oldIsbn?: string;
+  isBorrowed: boolean;
 }
 
 export type NewBook = Omit<Book, "_id"> & Partial<Pick<Book, "isBorrowed">>;
