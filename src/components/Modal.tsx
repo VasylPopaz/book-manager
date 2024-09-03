@@ -27,15 +27,16 @@ export const Modal = ({
       onClick={(e) => handleClickOnBackdrop(toggleModal, e)}
     >
       <div
-        className={`bg-firstGradColor relative max-h-[95%] max-w-[330px] rounded-[30px] sm-max:max-w-[300px] md:max-w-[700px] lg:max-w-[1180px] ${className}`}
+        className={`relative max-h-[95%] max-w-[330px] rounded bg-white sm-max:max-w-[300px] md:max-w-[700px] lg:max-w-[1180px] ${className}`}
       >
         <button
           type="button"
           onClick={toggleModal}
-          className="absolute right-4 top-5 md:right-7 md:top-7"
+          className="absolute right-3 top-3"
         >
-          <AiOutlineClose />
+          <AiOutlineClose size={24} />
         </button>
+
         {children}
       </div>
     </div>,
