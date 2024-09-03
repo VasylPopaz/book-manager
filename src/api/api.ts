@@ -6,11 +6,19 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
 
-export const getBooks = async (query?: string): Promise<BookResponse> => {
+export const getBooks = async (
+  query: string,
+  sort: string
+): Promise<BookResponse> => {
   try {
-    const { data } = await instance.get(
-      `/books${query ? `?query=${query}` : ""}`
-    );
+    let url = "/books";
+    const params = [];
+
+    if (query) params.push(`query=${encodeURIComponent(query)}`);
+    if (sort) params.push(sort);
+    if (params.length > 0) url += `?${params.join("&")}`;
+
+    const { data } = await instance.get(url);
 
     return data;
   } catch (error) {

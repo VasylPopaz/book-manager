@@ -49,10 +49,13 @@ button {
 }
 
 .th-cell {
-  @apply w-1/5 cursor-pointer bg-[#7f26ba] px-4 py-[10px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg last:w-12 last:rounded-tr-lg;
+  @apply relative w-1/5 cursor-pointer bg-[#7f26ba] px-4 py-[10px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg last:w-12 last:cursor-default last:rounded-tr-lg;
 }
 .table-cell {
   @apply w-1/5 px-4 py-2 first:w-auto last:w-12;
+}
+.icon {
+  @apply absolute right-10 top-1/2 -translate-y-1/2 transition duration-300;
 }
 
 .scrollbar {
