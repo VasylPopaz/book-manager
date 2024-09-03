@@ -14,16 +14,19 @@ export const App = () => {
   }>({ sortField: null, direction: "asc" });
 
   useEffect(() => {
-    getBooks().then((res) => {
-      setBooks(res.books);
-    });
+    getBooks();
   }, []);
 
   if (!books) return;
 
+  const onEditBook = (book: Book) => {
+    setBooks(books.map((b) => (b.isbn === book.isbn ? book : b)));
+  };
+
   const onDeleteBook = (isbn: string) => {
     setBooks(books.filter((book) => book.isbn !== isbn));
   };
+
   const handleSortClick = (sortField: keyof Book) => {
     let direction: "asc" | "desc" = "asc";
 
@@ -59,8 +62,9 @@ export const App = () => {
     <div className="container py-8">
       <BookList
         books={books}
-        handleSortClick={handleSortClick}
+        onEditBook={onEditBook}
         onDeleteBook={onDeleteBook}
+        handleSortClick={handleSortClick}
       />
     </div>
   );
