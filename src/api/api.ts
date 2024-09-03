@@ -42,10 +42,11 @@ export const addBook = async (credentials: NewBook): Promise<Book> => {
   }
 };
 
-export const updateBook = async (credentials: NewBook): Promise<Book> => {
+export const updateBook = async (
+  isbn: string,
+  credentials: NewBook
+): Promise<Book> => {
   try {
-    const { isbn } = credentials;
-
     const { data } = await instance.put(`/books/${isbn}`, credentials);
 
     return data;

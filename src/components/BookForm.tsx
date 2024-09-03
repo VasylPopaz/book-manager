@@ -5,26 +5,27 @@ import {
   useForm,
   UseFormRegister,
 } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Input } from "../components";
 
 import type { Book } from "../types";
 import { addBook, updateBook } from "../api";
 import { bookFormSchema } from "../schemas";
+import { checkObjectEquality } from "../helpers";
 
 interface BookFormProps {
   book?: Book;
   toggleModal: () => void;
-  onSaveBook: (book: Book, isEdit: boolean) => void;
+  onSaveBook: (book: Book, isEdit: boolean, oldIsbn?: string) => void;
 }
 
 interface FormData {
   title: string;
   author: string;
   isbn: string;
-  isBorrowed?: boolean;
+  isBorrowed: boolean;
 }
 
 export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
@@ -64,12 +65,22 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
           isBorrowed: data.isBorrowed,
         };
 
-        const updatedBook = await updateBook(bookData);
-        onSaveBook(updatedBook, true);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { _id: unused, ...oldBook } = book;
+
+        if (checkObjectEquality(bookData, oldBook)) {
+          toggleModal();
+          return;
+        }
+
+        const updatedBook = await updateBook(book.isbn, bookData);
+
+        onSaveBook(updatedBook, true, book.isbn);
         toast.success(
           `Book «${updatedBook.title}» has been successfully updated`
         );
       } else {
+        console.log("Add");
         const newBook = await addBook(data);
         onSaveBook(newBook, false);
         toast.success(`Book «${newBook.title}» has been successfully added`);

@@ -6,7 +6,7 @@ import type { Book } from "../types";
 interface ToolPanelProps {
   value: string;
   onChangeFilter: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSaveBook: (book: Book, isEdit: boolean) => void;
+  onSaveBook: (book: Book, isEdit: boolean, oldIsbn?: string) => void;
 }
 
 export const ToolPanel = ({

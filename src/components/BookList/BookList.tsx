@@ -1,4 +1,5 @@
 import { BiUpArrowAlt } from "react-icons/bi";
+
 import { BookListItem } from "./BookListItem";
 
 import { SortOptions, type Book } from "../../types";
@@ -24,9 +25,9 @@ export const BookList = ({
   const { field, direction } = sortConfig;
 
   return (
-    <div className="scrollbar mb-4 max-h-[80vh]">
-      <table className="w-full table-auto text-left">
-        <thead className="sticky top-0 text-slate-50">
+    <>
+      <table className="sticky top-0 w-full table-auto text-left text-slate-50">
+        <thead>
           <tr>
             <th
               className="th-cell w-auto text-center"
@@ -85,15 +86,19 @@ export const BookList = ({
             <th className="th-cell">Actions</th>
           </tr>
         </thead>
-        <tbody>
-          {books.map((book, index) => (
-            <BookListItem
-              key={book._id}
-              {...{ book, index, onSaveBook, onDeleteBook }}
-            />
-          ))}
-        </tbody>
       </table>
-    </div>
+      <div className="scrollbar mb-4 max-h-[75vh] text-left">
+        <table className="w-full table-auto">
+          <tbody>
+            {books.map((book, index) => (
+              <BookListItem
+                key={book._id}
+                {...{ book, index, onSaveBook, onDeleteBook }}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };

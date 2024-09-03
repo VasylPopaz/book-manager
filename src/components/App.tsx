@@ -34,9 +34,10 @@ export const App = () => {
 
   if (!books) return;
 
-  const onSaveBook = (book: Book, isEdit: boolean) => {
+  const onSaveBook = (book: Book, isEdit: boolean, oldIsbn?: string) => {
     if (isEdit) {
-      setBooks(books.map((b) => (b.isbn === book.isbn ? book : b)));
+      const currentIsbn = oldIsbn ? oldIsbn : book.isbn;
+      setBooks(books.map((b) => (b.isbn === currentIsbn ? book : b)));
     } else {
       setBooks([...books, book]);
     }
