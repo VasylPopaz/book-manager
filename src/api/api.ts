@@ -1,12 +1,16 @@
 import axios from "axios";
+
 import type { Book, BookResponse, NewBook } from "../types";
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
+
 export const getBooks = async (query?: string): Promise<BookResponse> => {
   try {
-    const { data } = await instance.get(`/books${query ? `?${query}` : ""}`);
+    const { data } = await instance.get(
+      `/books${query ? `?query=${query}` : ""}`
+    );
 
     return data;
   } catch (error) {
@@ -50,7 +54,9 @@ export const updateBookStatus = async (
   isBorrowed: boolean
 ): Promise<Book> => {
   try {
-    const { data } = await instance.patch(`/books/${isbn}`, { isBorrowed });
+    const { data } = await instance.patch(`/books/${isbn}/borrow`, {
+      isBorrowed,
+    });
 
     return data;
   } catch (error) {
