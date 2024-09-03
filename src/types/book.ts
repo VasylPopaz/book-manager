@@ -12,3 +12,11 @@ export interface BookResponse {
   books: Book[];
   total: number;
 }
+
+export enum SortOptions {
+  None = "none",
+  Title = "byTitle",
+  Author = "byAuthor",
+  ISBN = "byIsbn",
+  Status = "byStatus",
+}
