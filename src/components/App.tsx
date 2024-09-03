@@ -1,21 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { debounce } from "lodash";
 
-import { BookList } from "../components";
+import { BookList, ToolPanel } from "../components";
 
 import { getBooks } from "../api";
 import type { Book } from "../types";
 
 export const App = () => {
   const [books, setBooks] = useState<Book[] | null>(null);
+  const [filter, setFilter] = useState("");
 
   const [sortConfig, setSortConfig] = useState<{
     sortField: keyof Book | null;
     direction: "asc" | "desc";
   }>({ sortField: null, direction: "asc" });
 
+  const debouncedFetch = useRef(
+    debounce((query: string) => {
+      getBooks(query).then((res) => {
+        setBooks(res.books);
+      });
+    }, 400)
+  ).current;
+
   useEffect(() => {
-    getBooks();
-  }, []);
+    const query = filter ? `query=${filter}` : "";
+    debouncedFetch(query);
+  }, [debouncedFetch, filter]);
 
   if (!books) return;
 
@@ -25,6 +36,11 @@ export const App = () => {
 
   const onDeleteBook = (isbn: string) => {
     setBooks(books.filter((book) => book.isbn !== isbn));
+  };
+
+  const handleChangeFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFilter(value);
   };
 
   const handleSortClick = (sortField: keyof Book) => {
@@ -60,12 +76,27 @@ export const App = () => {
 
   return (
     <div className="container py-8">
-      <BookList
-        books={books}
-        onEditBook={onEditBook}
-        onDeleteBook={onDeleteBook}
-        handleSortClick={handleSortClick}
-      />
+      <ToolPanel onChangeFilter={handleChangeFilter} value={filter} />
+      {books.length ? (
+        <BookList
+          books={books}
+          onEditBook={onEditBook}
+          onDeleteBook={onDeleteBook}
+          handleSortClick={handleSortClick}
+        />
+      ) : !filter ? (
+        <div className="flex h-[85vh] items-center justify-center">
+          <h2 className="text-left text-[38px] font-semibold">
+            Book list is empty.
+          </h2>
+        </div>
+      ) : (
+        <div className="flex h-[85vh] items-center justify-center">
+          <h2 className="text-left text-[38px] font-semibold">
+            No results for "{filter}".
+          </h2>
+        </div>
+      )}
     </div>
   );
 };
