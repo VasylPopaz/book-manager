@@ -1,12 +1,19 @@
+import { BookForm, Modal } from "../components";
+
 import { useModal } from "../hooks";
-import { Modal } from "./Modal";
+import type { Book } from "../types";
 
 interface ToolPanelProps {
   value: string;
   onChangeFilter: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSaveBook: (book: Book, isEdit: boolean) => void;
 }
 
-export const ToolPanel = ({ value, onChangeFilter }: ToolPanelProps) => {
+export const ToolPanel = ({
+  value,
+  onChangeFilter,
+  onSaveBook,
+}: ToolPanelProps) => {
   const [isOpen, toggleModal] = useModal();
   return (
     <>
@@ -28,7 +35,7 @@ export const ToolPanel = ({ value, onChangeFilter }: ToolPanelProps) => {
       </div>
       {isOpen && (
         <Modal isOpen={isOpen} toggleModal={toggleModal}>
-          <div></div>
+          <BookForm toggleModal={toggleModal} onSaveBook={onSaveBook} />
         </Modal>
       )}
     </>

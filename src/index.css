@@ -44,6 +44,9 @@ button {
 .field {
   @apply h-[40px] w-full rounded-md border border-solid border-[#d8c4e6] px-2.5 py-2 font-normal transition duration-300 focus-visible:border-[#7f26ba] focus-visible:outline-none;
 }
+.field-error {
+  @apply absolute mt-[2px] text-[12px] text-red-600;
+}
 
 .th-cell {
   @apply w-1/5 cursor-pointer bg-[#7f26ba] px-4 py-[10px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg last:w-12 last:rounded-tr-lg;

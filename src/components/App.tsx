@@ -24,14 +24,18 @@ export const App = () => {
   ).current;
 
   useEffect(() => {
-    const query = filter ? `query=${filter}` : "";
+    const query = filter ? filter : "";
     debouncedFetch(query);
   }, [debouncedFetch, filter]);
 
   if (!books) return;
 
-  const onEditBook = (book: Book) => {
-    setBooks(books.map((b) => (b.isbn === book.isbn ? book : b)));
+  const onSaveBook = (book: Book, isEdit: boolean) => {
+    if (isEdit) {
+      setBooks(books.map((b) => (b.isbn === book.isbn ? book : b)));
+    } else {
+      setBooks([...books, book]);
+    }
   };
 
   const onDeleteBook = (isbn: string) => {
@@ -76,14 +80,23 @@ export const App = () => {
 
   return (
     <div className="container py-8">
-      <ToolPanel onChangeFilter={handleChangeFilter} value={filter} />
+      <ToolPanel
+        onChangeFilter={handleChangeFilter}
+        value={filter}
+        onSaveBook={onSaveBook}
+      />
       {books.length ? (
-        <BookList
-          books={books}
-          onEditBook={onEditBook}
-          onDeleteBook={onDeleteBook}
-          handleSortClick={handleSortClick}
-        />
+        <>
+          <BookList
+            books={books}
+            onSaveBook={onSaveBook}
+            onDeleteBook={onDeleteBook}
+            handleSortClick={handleSortClick}
+          />
+          <h2 className="text-right text-[24px] font-bold">
+            Total books: {books.length}
+          </h2>
+        </>
       ) : !filter ? (
         <div className="flex h-[85vh] items-center justify-center">
           <h2 className="text-left text-[38px] font-semibold">

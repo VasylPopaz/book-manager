@@ -1,23 +1,24 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
+import { toast } from "react-toastify";
+
+import { Modal, BookForm } from "../../components";
 
 import type { Book } from "../../types";
 import { useModal } from "../../hooks";
-import { Modal } from "../Modal";
 import { deleteBook, updateBookStatus } from "../../api";
-import { toast } from "react-toastify";
 
 interface BookListItemProps {
   book: Book;
   index: number;
-  onEditBook: (book: Book) => void;
+  onSaveBook: (book: Book, isEdit: boolean) => void;
   onDeleteBook: (id: string) => void;
 }
 
 export const BookListItem = ({
   book,
   index,
-  onEditBook,
+  onSaveBook,
   onDeleteBook,
 }: BookListItemProps) => {
   const [isOpen, toggleModal] = useModal();
@@ -25,7 +26,7 @@ export const BookListItem = ({
   const handleChangeStatus = async () => {
     try {
       const updatedBook = await updateBookStatus(book.isbn, !book.isBorrowed);
-      onEditBook(updatedBook);
+      onSaveBook(updatedBook, true);
       toast.success(
         `Status of the book «${book.title}» has been successfully updated`
       );
@@ -71,7 +72,11 @@ export const BookListItem = ({
       </tr>
       {isOpen && (
         <Modal isOpen={isOpen} toggleModal={toggleModal}>
-          <div></div>
+          <BookForm
+            toggleModal={toggleModal}
+            onSaveBook={onSaveBook}
+            book={book}
+          />
         </Modal>
       )}
     </>

@@ -1,21 +1,22 @@
 import { BookListItem } from "./BookListItem";
+
 import type { Book } from "../../types";
 
 interface BookListProps {
   books: Book[];
   handleSortClick: (sortField: keyof Book) => void;
-  onEditBook: (book: Book) => void;
+  onSaveBook: (book: Book, isEdit: boolean) => void;
   onDeleteBook: (id: string) => void;
 }
 
 export const BookList = ({
   books,
   handleSortClick,
-  onEditBook,
+  onSaveBook,
   onDeleteBook,
 }: BookListProps) => {
   return (
-    <div className="scrollbar max-h-[85vh]">
+    <div className="scrollbar mb-4 max-h-[80vh]">
       <table className="w-full table-auto text-left">
         <thead className="sticky top-0 text-slate-50">
           <tr>
@@ -47,7 +48,7 @@ export const BookList = ({
           {books.map((book, index) => (
             <BookListItem
               key={book._id}
-              {...{ book, index, onEditBook, onDeleteBook }}
+              {...{ book, index, onSaveBook, onDeleteBook }}
             />
           ))}
         </tbody>
