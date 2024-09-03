@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       autoClose={2500}
       transition={Zoom}
       style={{ zIndex: 999 }}
+      closeOnClick={true}
     />
   </>
 );
