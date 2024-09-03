@@ -39,7 +39,17 @@ button {
 }
 
 .primary-btn {
-  @apply rounded border-2 border-[#7f26ba] px-6 py-2 text-center hover:bg-[#7f26ba] hover:text-white focus-visible:bg-[#7f26ba] focus-visible:text-white;
+  @apply rounded-md border-2 border-[#7f26ba] px-6 py-2 text-center hover:bg-[#7f26ba] hover:text-white focus-visible:bg-[#7f26ba] focus-visible:text-white;
+}
+.field {
+  @apply h-[40px] w-full rounded-md border border-solid border-[#d8c4e6] px-2.5 py-2 font-normal transition duration-300 focus-visible:border-[#7f26ba] focus-visible:outline-none;
+}
+
+.th-cell {
+  @apply w-1/5 cursor-pointer bg-[#7f26ba] px-4 py-[10px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg last:w-12 last:rounded-tr-lg;
+}
+.table-cell {
+  @apply w-1/5 px-4 py-2 first:w-auto last:w-12;
 }
 
 .scrollbar {
