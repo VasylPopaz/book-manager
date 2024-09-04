@@ -26,7 +26,7 @@ export const BookList = ({
 
   return (
     <>
-      <table className="sticky top-0 w-full table-auto text-left text-slate-50">
+      <table className="text-primaryTextColor sticky top-0 w-full table-auto text-left">
         <thead>
           <tr>
             <th

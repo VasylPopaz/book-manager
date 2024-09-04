@@ -10,7 +10,13 @@ export default {
     fontFamily: {
       inter: ["Inter", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      colors: {
+        accentColor: "var(--accent-color)",
+        primaryBgColor: "var(--primary-bg-color)",
+        primaryTextColor: "var(--primary-text-color)",
+      },
+    },
   },
   corePlugins: {
     container: false,

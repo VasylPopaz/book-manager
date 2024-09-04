@@ -66,7 +66,7 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
         };
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { _id: unused, ...oldBook } = book;
+        const { _id: _, ...oldBook } = book;
 
         if (checkObjectEquality(bookData, oldBook)) {
           toggleModal();
@@ -122,7 +122,7 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
         <button
           type="button"
           onClick={toggleBookStatus}
-          className={`w-full rounded-md px-4 py-2 text-center hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
+          className={`text-accentColor w-full rounded-md px-4 py-2 text-center hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
         >
           {bookStatus ? "Borrowed" : "Available"}
         </button>

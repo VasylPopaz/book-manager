@@ -27,9 +27,15 @@
   font-display: swap;
 }
 /* --------------- */
+:root {
+  --accent-color: #282b30;
+  --primary-bg-color: #363b41;
+  --primary-text-color: #f7f4e9;
+}
 
 body {
-  background-color: rgba(186, 190, 194, 0.963);
+  background-color: #363b41;
+  color: #f7f4e9;
   font-family: "Inter", sans-serif;
   font-weight: 400;
 }
@@ -39,17 +45,17 @@ button {
 }
 
 .primary-btn {
-  @apply rounded-md border-2 border-[#7f26ba] px-6 py-2 text-center hover:bg-[#7f26ba] hover:text-white focus-visible:bg-[#7f26ba] focus-visible:text-white;
+  @apply border-accentColor bg-accentColor hover:border-primaryTextColor focus-visible:border-primaryTextColor rounded-md border-2 px-6 py-2 text-center text-white;
 }
 .field {
-  @apply h-[40px] w-full rounded-md border border-solid border-[#d8c4e6] px-2.5 py-2 font-normal transition duration-300 focus-visible:border-[#7f26ba] focus-visible:outline-none;
+  @apply text-primaryTextColor border-primaryTextColor placeholder:text-primaryTextColor h-[40px] w-full rounded-md border bg-transparent px-2.5 py-2 font-normal opacity-50 transition duration-300 focus-visible:opacity-100 focus-visible:outline-none;
 }
 .field-error {
-  @apply absolute mt-[2px] text-[12px] text-red-600;
+  @apply absolute mt-[2px] text-[12px] text-red-500;
 }
 
 .th-cell {
-  @apply relative w-1/5 cursor-pointer bg-[#7f26ba] px-4 py-[10px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg first:px-[25px] last:w-12 last:cursor-default last:rounded-tr-lg;
+  @apply relative w-1/5 cursor-pointer bg-[#282b30] px-4 py-[10px] text-[18px] font-bold transition duration-300 first:w-[40px] first:rounded-tl-lg first:px-[25px] last:w-12 last:cursor-default last:rounded-tr-lg;
 }
 .table-cell {
   @apply w-1/5 px-4 py-2 first:w-[40px] last:w-12;
@@ -59,8 +65,8 @@ button {
 }
 
 .scrollbar {
-  --thumb-color: #7f26ba;
-  --track-color: #b798cd;
+  --thumb-color: #282b30;
+  --track-color: #646a73;
   overflow: auto;
   scrollbar-color: auto !important;
 }

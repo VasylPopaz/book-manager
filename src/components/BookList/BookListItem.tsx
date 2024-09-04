@@ -47,7 +47,7 @@ export const BookListItem = ({
 
   return (
     <>
-      <tr className="even:bg-[#aea4b9]">
+      <tr className="border-b border-b-[#f7f4e9]">
         <td className="table-cell text-center">{index + 1}</td>
         <td className="table-cell">{book.title}</td>
         <td className="table-cell">{book.author}</td>
@@ -55,7 +55,7 @@ export const BookListItem = ({
         <td className="table-cell">
           <button
             onClick={handleChangeStatus}
-            className={`w-[160px] rounded-md px-4 py-1 text-center hover:text-white focus-visible:text-white ${book.isBorrowed ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
+            className={`text-accentColor w-[160px] rounded-md px-4 py-1 text-center hover:text-white focus-visible:text-white ${book.isBorrowed ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
           >
             {" "}
             {book.isBorrowed ? "Borrowed" : "Available"}
@@ -63,10 +63,16 @@ export const BookListItem = ({
         </td>
         <td className="table-cell space-x-4">
           <button onClick={toggleModal}>
-            <AiOutlineEdit size={24} className="fill-green-600" />
+            <AiOutlineEdit
+              size={24}
+              className="fill-green-600 transition duration-300 hover:scale-[1.15] focus-visible:scale-[1.15]"
+            />
           </button>
           <button onClick={handleDeleteClick}>
-            <AiOutlineDelete size={22} className="fill-red-600" />
+            <AiOutlineDelete
+              size={22}
+              className="fill-red-600 transition duration-300 hover:scale-[1.15] focus-visible:scale-[1.15]"
+            />
           </button>
         </td>
       </tr>

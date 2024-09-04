@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ToastContainer
       autoClose={2500}
       transition={Zoom}
+      theme="dark"
       style={{ zIndex: 999 }}
       closeOnClick={true}
     />
