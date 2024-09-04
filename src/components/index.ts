@@ -4,3 +4,4 @@ export * from "./Modal";
 export * from "./ToolPanel";
 export * from "./Input";
 export * from "./BookForm";
+export * from "./Loader";

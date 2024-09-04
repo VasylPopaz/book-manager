@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { debounce } from "lodash";
 
-import { BookList, ToolPanel } from "../components";
+import { BookList, Loader, ToolPanel } from "../components";
 
 import { getBooks } from "../api";
 import { Book, SortOptions } from "../types";
 
 export const App = () => {
   const [books, setBooks] = useState<Book[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [filter, setFilter] = useState("");
 
   const [sortConfig, setSortConfig] = useState<{
@@ -17,9 +18,12 @@ export const App = () => {
 
   const debouncedFetch = useRef(
     debounce((query: string, sort: string) => {
-      getBooks(query, sort).then((res) => {
-        setBooks(res.books);
-      });
+      setIsLoading(true);
+      getBooks(query, sort)
+        .then((res) => {
+          setBooks(res.books);
+        })
+        .finally(() => setIsLoading(false));
     }, 400)
   ).current;
 
@@ -65,38 +69,41 @@ export const App = () => {
   };
 
   return (
-    <div className="container py-8">
-      <ToolPanel
-        onChangeFilter={handleChangeFilter}
-        value={filter}
-        onSaveBook={onSaveBook}
-      />
-      {books.length ? (
-        <>
-          <BookList
-            books={books}
-            onSaveBook={onSaveBook}
-            onDeleteBook={onDeleteBook}
-            handleSortClick={handleSortClick}
-            sortConfig={sortConfig}
-          />
-          <h2 className="text-right text-[24px] font-bold">
-            Total books: {books.length}
-          </h2>
-        </>
-      ) : !filter ? (
-        <div className="flex h-[85vh] items-center justify-center">
-          <h2 className="text-left text-[38px] font-semibold">
-            Book list is empty.
-          </h2>
-        </div>
-      ) : (
-        <div className="flex h-[85vh] items-center justify-center">
-          <h2 className="text-left text-[38px] font-semibold">
-            No results for "{filter}".
-          </h2>
-        </div>
-      )}
-    </div>
+    <>
+      {isLoading && <Loader />}
+      <div className="container py-8">
+        <ToolPanel
+          onChangeFilter={handleChangeFilter}
+          value={filter}
+          onSaveBook={onSaveBook}
+        />
+        {books.length ? (
+          <>
+            <BookList
+              books={books}
+              onSaveBook={onSaveBook}
+              onDeleteBook={onDeleteBook}
+              handleSortClick={handleSortClick}
+              sortConfig={sortConfig}
+            />
+            <h2 className="text-right text-[24px] font-bold">
+              Total books: {books.length}
+            </h2>
+          </>
+        ) : !filter ? (
+          <div className="flex h-[85vh] items-center justify-center">
+            <h2 className="text-left text-[38px] font-semibold">
+              Book list is empty.
+            </h2>
+          </div>
+        ) : (
+          <div className="flex h-[85vh] items-center justify-center">
+            <h2 className="text-left text-[38px] font-semibold">
+              No results for "{filter}".
+            </h2>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
