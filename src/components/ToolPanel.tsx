@@ -17,7 +17,7 @@ export const ToolPanel = ({
   const [isOpen, toggleModal] = useModal();
   return (
     <>
-      <div className="mb-4 flex justify-between">
+      <div className="mb-4 flex gap-2 md:justify-between">
         <input
           className="field max-w-[250px]"
           type="text"

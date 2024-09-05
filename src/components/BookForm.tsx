@@ -100,7 +100,7 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="w-[400px] p-8 text-center">
+      <div className="w-[350px] p-8 text-center md:w-[400px]">
         <h2 className="mb-8 text-[24px] font-bold">
           {!book ? "Add New Book" : "Edit Book"}
         </h2>
@@ -130,7 +130,7 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
           <button
             type="button"
             onClick={toggleBookStatus}
-            className={`text-accentColor w-full rounded-md px-4 py-2 text-center hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
+            className={`w-full rounded-md px-4 py-2 text-center text-accentColor hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
           >
             {bookStatus ? "Borrowed" : "Available"}
           </button>
