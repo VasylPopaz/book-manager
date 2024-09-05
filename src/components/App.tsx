@@ -36,7 +36,7 @@ export const App = () => {
     debouncedFetch(query, sort);
   }, [debouncedFetch, filter, sortConfig.direction, sortConfig.field]);
 
-  if (!books) return;
+  if (!books) return <Loader />;
 
   const onSaveBook = (book: Book, isEdit: boolean, oldIsbn?: string) => {
     if (isEdit) {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   FieldValues,
   SubmitHandler,
@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Input } from "../components";
+import { Input, Loader } from "../components";
 
 import type { Book } from "../types";
 import { addBook, updateBook } from "../api";
@@ -40,6 +40,8 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
     resolver: yupResolver(bookFormSchema),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (book) {
       setValue("title", book.title);
@@ -57,6 +59,7 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setIsLoading(true);
       if (book) {
         const bookData = {
           title: data.title,
@@ -85,52 +88,58 @@ export const BookForm = ({ book, toggleModal, onSaveBook }: BookFormProps) => {
         onSaveBook(newBook, false);
         toast.success(`Book «${newBook.title}» has been successfully added`);
       }
+
       toggleModal();
     } catch (error) {
       toast.error(error instanceof Error && error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="w-[400px] p-8 text-center">
-      <h2 className="mb-8 text-[24px] font-bold">
-        {!book ? "Add New Book" : "Edit Book"}
-      </h2>
-      <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          name="title"
-          type="text"
-          placeholder="Title"
-          register={register as unknown as UseFormRegister<FieldValues>}
-          errors={errors}
-        />
-        <Input
-          name="author"
-          type="text"
-          placeholder="Author"
-          register={register as unknown as UseFormRegister<FieldValues>}
-          errors={errors}
-        />
-        <Input
-          name="isbn"
-          type="text"
-          placeholder="ISBN"
-          register={register as unknown as UseFormRegister<FieldValues>}
-          errors={errors}
-        />
+    <>
+      {isLoading && <Loader />}
+      <div className="w-[400px] p-8 text-center">
+        <h2 className="mb-8 text-[24px] font-bold">
+          {!book ? "Add New Book" : "Edit Book"}
+        </h2>
+        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            name="title"
+            type="text"
+            placeholder="Title"
+            register={register as unknown as UseFormRegister<FieldValues>}
+            errors={errors}
+          />
+          <Input
+            name="author"
+            type="text"
+            placeholder="Author"
+            register={register as unknown as UseFormRegister<FieldValues>}
+            errors={errors}
+          />
+          <Input
+            name="isbn"
+            type="text"
+            placeholder="ISBN"
+            register={register as unknown as UseFormRegister<FieldValues>}
+            errors={errors}
+          />
 
-        <button
-          type="button"
-          onClick={toggleBookStatus}
-          className={`text-accentColor w-full rounded-md px-4 py-2 text-center hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
-        >
-          {bookStatus ? "Borrowed" : "Available"}
-        </button>
+          <button
+            type="button"
+            onClick={toggleBookStatus}
+            className={`text-accentColor w-full rounded-md px-4 py-2 text-center hover:text-white focus-visible:text-white ${bookStatus ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
+          >
+            {bookStatus ? "Borrowed" : "Available"}
+          </button>
 
-        <button type="submit" className="primary-btn w-full">
-          Save
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="primary-btn w-full">
+            Save
+          </button>
+        </form>
+      </div>
+    </>
   );
 };

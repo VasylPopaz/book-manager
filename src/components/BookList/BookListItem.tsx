@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { AiOutlineEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-import { Modal, BookForm } from "../../components";
+import { Modal, BookForm, Loader } from "../../components";
 
 import type { Book } from "../../types";
 import { useModal } from "../../hooks";
@@ -22,9 +23,11 @@ export const BookListItem = ({
   onDeleteBook,
 }: BookListItemProps) => {
   const [isOpen, toggleModal] = useModal();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangeStatus = async () => {
     try {
+      setIsLoading(true);
       const updatedBook = await updateBookStatus(book.isbn, !book.isBorrowed);
       onSaveBook(updatedBook, true);
       toast.success(
@@ -32,21 +35,27 @@ export const BookListItem = ({
       );
     } catch (error) {
       toast.error(error instanceof Error && error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDeleteClick = async () => {
     try {
+      setIsLoading(true);
       await deleteBook(book.isbn);
       onDeleteBook(book.isbn);
       toast.success(`Book «${book.title}» was deleted successfully`);
     } catch (error) {
       toast.error(error instanceof Error && error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isLoading && <Loader />}
       <tr className="border-b border-b-[#f7f4e9]">
         <td className="table-cell text-center">{index + 1}</td>
         <td className="table-cell">{book.title}</td>
@@ -55,9 +64,8 @@ export const BookListItem = ({
         <td className="table-cell">
           <button
             onClick={handleChangeStatus}
-            className={`text-accentColor w-[160px] rounded-md px-4 py-1 text-center hover:text-white focus-visible:text-white ${book.isBorrowed ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
+            className={`w-[160px] rounded-md px-4 py-1 text-center text-accentColor hover:text-white focus-visible:text-white ${book.isBorrowed ? "bg-red-400 hover:bg-red-600 focus-visible:bg-red-600" : "bg-green-400 hover:bg-green-600 focus-visible:bg-green-600"} transition duration-300`}
           >
-            {" "}
             {book.isBorrowed ? "Borrowed" : "Available"}
           </button>
         </td>
